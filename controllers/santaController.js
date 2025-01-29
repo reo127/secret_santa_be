@@ -2,6 +2,7 @@ const multer = require('multer');
 const xlsx = require('xlsx');
 const path = require('path');
 const fs = require('fs');
+const os = require('os'); 
 const { assignSecretSanta, hasMatchingAssignments } = require('../utils/assignSecretSanta');
 
 const secretSantaResult = async (req, res) => {
@@ -51,7 +52,7 @@ const secretSantaResult = async (req, res) => {
         ];
 
         xlsx.utils.book_append_sheet(workbook, worksheet, 'Secret Santa Assignments');
-        const tempFilePath = path.join(__dirname, '../temp', `secret_santa_${Date.now()}.xlsx`);
+        const tempFilePath = path.join(os.tmpdir(), `secret_santa_${Date.now()}.xlsx`);
 
         const tempDir = path.dirname(tempFilePath);
         if (!fs.existsSync(tempDir)) {
